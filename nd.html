@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Lucky Drop</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Playfair+Display:wght@700&display=swap');
+        body {
+            font-family: 'Playfair Display', 'Montserrat', 'Segoe UI', 'Roboto', Arial, sans-serif;
+            background: 
+                linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 40%, #1976d2 100%),
+                linear-gradient(120deg, #f7fafc 0%, #e3f2fd 100%);
+            background-blend-mode: multiply;
+            text-align: center;
+            margin: 0;
+            min-height: 100vh;
+            color: #222;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            position: relative;
+        }
+        /* Vignette overlay for classic effect */
+        .vignette {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 2;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(30,60,114,0.15) 100%);
+        }
+        .container {
+            background: rgba(255,255,255,0.35);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(30,60,114,0.12);
+            padding: 48px 32px 32px 32px;
+            margin: auto;
+            max-width: 420px;
+            animation: fadeIn 1s;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(4px);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .drop {
+            font-size: 90px;
+            margin-bottom: 20px;
+            color: #1976d2;
+            animation: dropAppear 1.5s cubic-bezier(.68,-0.55,.27,1.55) forwards;
+            opacity: 0;
+            filter: drop-shadow(0 8px 16px #1976d288);
+            font-weight: bold;
+        }
+        @keyframes dropAppear {
+            0% { opacity: 0; transform: scale(0.5) translateY(-60px);}
+            80% { opacity: 1; transform: scale(1.1) translateY(10px);}
+            100% { opacity: 1; transform: scale(1) translateY(0);}
+        }
+        h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #1976d2;
+            letter-spacing: 1px;
+            font-weight: bold;
+            text-shadow: 0 2px 8px #b2ebf2;
+            font-family: 'Playfair Display', serif;
+        }
+        #output {
+            font-size: 1.5em;
+            color: #1976d2;
+            font-weight: bold;
+            margin-bottom: 30px;
+            animation: fadeText 1.2s;
+            background: rgba(102,166,255,0.08);
+            border-radius: 8px;
+            padding: 10px 0;
+            box-shadow: 0 2px 8px #66a6ff22;
+            font-family: 'Montserrat', sans-serif;
+        }
+        @keyframes fadeText {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .celebrate {
+            font-size: 1.1em;
+            color: #0077ff;
+            margin-bottom: 20px;
+            animation: fadeText 2s;
+            background: rgba(137,247,254,0.12);
+            border-radius: 8px;
+            padding: 8px 0;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .back-btn {
+            padding: 12px 30px;
+            font-size: 1.1em;
+            background: linear-gradient(90deg, #66a6ff 0%, #89f7fe 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(102,166,255,0.15);
+            transition: background 0.2s, transform 0.2s;
+            margin-top: 10px;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .back-btn:hover {
+            background: linear-gradient(90deg, #89f7fe 0%, #66a6ff 100%);
+            transform: scale(1.05);
+        }
+        .confetti {
+            position: absolute;
+            left: 50%;
+            top: 10px;
+            transform: translateX(-50%);
+            font-size: 2em;
+            pointer-events: none;
+            animation: confettiPop 2s infinite alternate;
+            font-weight: bold;
+        }
+        @keyframes confettiPop {
+            0% { opacity: 0.7; transform: scale(1);}
+            100% { opacity: 1; transform: scale(1.1);}
+        }
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container { padding: 24px 8px 16px 8px; max-width: 95vw; }
+            h2 { font-size: 1.2em; }
+            .drop { font-size: 3em; }
+            #output { font-size: 1em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="vignette"></div>
+    <div class="container">
+    
+        <div class="drop">💧</div>
+        <h2>Nigalude Dhaham mattiya avasana thulli</h2>
+        <div id="output"></div>
+        <div class="celebrate">A refreshing moment, chosen just for you.</div>
+        <button class="back-btn" onclick="goBack()">Try Again</button>
+    </div>
+    <script>
+        // Get the drop value from the URL
+        const params = new URLSearchParams(window.location.search);
+        const drop = params.get('drop');
+        document.getElementById('output').textContent =
+            drop ? `Thulli count: ${drop}` : "No drop value found.";
+
+        function goBack() {
+            window.location.href = "1st.html";
+        }
+
+        // Scroll up event to go back to previous page
+        let scrolledBack = false;
+        window.addEventListener('wheel', function(e) {
+            if (e.deltaY < 0 && !scrolledBack) {
+                scrolledBack = true;
+                goBack();
+            }
+        });
+        window.addEventListener('touchmove', function(e) {
+            if (!scrolledBack && e.touches && e.touches.length) {
+                goBack();
+                scrolledBack = true;
+            }
+        });
+    </script>

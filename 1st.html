@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Water Drop Calculator</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', 'Segoe UI', 'Roboto', Arial, sans-serif;
+            /* Classic multi-gradient background for professional look */
+            background:
+                linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 40%, #1976d2 100%),
+                linear-gradient(120deg, #f7fafc 0%, #e3f2fd 100%);
+            background-blend-mode: multiply;
+            margin: 0;
+            min-height: 100vh;
+            color: #222;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        /* Vignette overlay for classic effect */
+        .vignette {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 2;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(30,60,114,0.15) 100%);
+        }
+        .container {
+            background: rgba(255,255,255,0.35); /* More transparent */
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(30,60,114,0.12);
+            padding: 40px 30px;
+            max-width: 400px;
+            margin: auto;
+            margin-top: 80px;
+            animation: fadeIn 1s;
+            z-index: 10;
+            backdrop-filter: blur(4px);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .tap {
+            font-size: 60px;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: tapFlow 2s infinite;
+        }
+        @keyframes tapFlow {
+            0%, 100% { color: #1976d2; }
+            50% { color: #b2ebf2; }
+        }
+        .drops {
+            margin-bottom: 30px;
+        }
+        .drop {
+            font-size: 36px;
+            display: inline-block;
+            margin: 0 6px;
+            animation: dropFade 2s infinite;
+            color: #1976d2;
+        }
+        .drop:nth-child(2) { animation-delay: 0.5s; }
+        .drop:nth-child(3) { animation-delay: 1s; }
+        @keyframes dropFade {
+            0%, 100% { opacity: 0.7; transform: scale(1);}
+            50% { opacity: 1; transform: scale(1.2);}
+        }
+        h2 {
+            font-size: 2em;
+            margin-bottom: 18px;
+            color: #1976d2;
+            letter-spacing: 1px;
+            font-weight: bold;
+            text-shadow: 0 2px 8px #b2ebf2;
+        }
+        .input-group {
+            margin: 20px 0;
+        }
+        label {
+            font-size: 1.1em;
+            margin-right: 10px;
+            color: #1976d2;
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            border: 2px solid #1976d2;
+            background: #f7fbff;
+            transition: border 0.2s;
+        }
+        input[type="number"]:focus {
+            border: 2px solid #0077ff;
+            outline: none;
+        }
+        button {
+            padding: 12px 30px;
+            font-size: 1.1em;
+            background: linear-gradient(90deg, #1976d2 0%, #89f7fe 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(30,60,114,0.15);
+            transition: background 0.2s, transform 0.2s;
+            font-weight: bold;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #89f7fe 0%, #1976d2 100%);
+            transform: scale(1.05);
+        }
+        #result {
+            margin-top: 25px;
+            font-size: 1.1em;
+            color: #d32f2f;
+            font-weight: 500;
+        }
+        @media (max-width: 480px) {
+            .container { padding: 24px 8px 16px 8px; max-width: 95vw; }
+            h2 { font-size: 1.2em; }
+            .tap { font-size: 2em; }
+            .drop { font-size: 1.5em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="vignette"></div>
+    <div class="container">
+        <div class="tap">🚰</div>
+        <div class="drops">
+            <span class="drop">💧</span>
+            <span class="drop">💧</span>
+            <span class="drop">💧</span>
+        </div>
+        <h2>ETHRA CUP KUDICHU?</h2>
+        <div class="input-group">
+            <label for="cups">Cups of water:</label>
+            <input type="number" id="cups" min="1" step="1" value="1">
+        </div>
+        <button onclick="goToNextPage()">Next</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function goToNextPage() {
+            const cups = parseInt(document.getElementById('cups').value) || 0;
+            const cupMl = 236.588;
+            const dropMl = 0.5;
+            const totalMl = cups * cupMl;
+            const drops = Math.floor(totalMl / dropMl);
+
+            if (drops < 1) {
+                document.getElementById('result').textContent = "Please enter at least 1 cup.";
+                return;
+            }
+
+            const randomDrop = Math.floor(Math.random() * drops) + 1;
+            window.location.href = `nd.html?drop=${randomDrop}`;
+        }
+    </script>
+</body>
+</html>
