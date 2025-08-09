@@ -1,3 +1,5 @@
+<img width="3188" height="1202" alt="image" src="https://github.com/user-attachments/assets/6ecf720e-2ff1-4faf-9b9e-df46e47347dd" />
+
 # vellam QUENCHaa 🎯
 Basic Details
 Team Name: Empowera
